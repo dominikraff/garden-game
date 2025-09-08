@@ -1,11 +1,11 @@
-# Angular specific
+# Angular / Ionic Build
 /dist/
 /out-tsc/
 /tmp/
 /coverage/
 /e2e/test-output/
 /.angular/
-.angular/
+/.ng/
 
 # Node modules and dependency files
 /node_modules/
@@ -15,10 +15,6 @@
 # Environment files
 /.env
 
-# Angular CLI and build artefacts
-/.angular-cli.json
-/.ng/
-
 # TypeScript cache
 *.tsbuildinfo
 
@@ -26,3 +22,41 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+*.log
+
+# IDE/Editor files
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Capacitor build artefacts
+/android/.gradle/
+/android/captures/
+/android/.idea/
+/android/local.properties
+/android/*.iml
+/android/app/build/
+/android/build/
+/ios/build/
+/ios/Pods/
+/ios/*.xcworkspace
+/ios/*.xcodeproj/project.xcworkspace/
+/ios/*.xcodeproj/xcuserdata/
+/ios/*.xcworkspace/xcuserdata/
+
+# Capacitor generated config
+/capacitor.config.json.backup
+
+# Cordova (falls mal was vermischt wird)
+/plugins/
+/platforms/
+
+# Ionic specific
+/.sass-cache/
+/www/
+
+# Coverage / Testing
+/coverage/
+/test-output/
