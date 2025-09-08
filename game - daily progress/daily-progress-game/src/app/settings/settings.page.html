@@ -1,0 +1,169 @@
+<ion-header [translucent]="false" class="custom-header">
+  <ion-toolbar color="primary">
+    <ion-title>
+      <div class="title-container">
+        {{ t('settings.title') }}
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">{{ t('settings.title') }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="settings-container">
+    <!-- Profile Settings -->
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>{{ t('settings.profile.title') }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="stacked">{{ t('settings.profile.name') }}</ion-label>
+          <ion-input 
+            [(ngModel)]="playerName" 
+            (ionChange)="updatePlayerName()"
+            placeholder="{{ t('settings.profile.namePlaceholder') }}">
+          </ion-input>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label position="stacked">{{ t('settings.profile.email') }}</ion-label>
+          <ion-input 
+            type="email"
+            [(ngModel)]="playerEmail" 
+            (ionChange)="updatePlayerEmail()"
+            placeholder="{{ t('settings.profile.emailPlaceholder') }}">
+          </ion-input>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Language Settings -->
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>{{ t('settings.language.title') }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-radio-group [(ngModel)]="selectedLanguage" (ionChange)="changeLanguage($event)">
+          <ion-item>
+            <ion-label>
+              <h2>Deutsch</h2>
+              <p>{{ t('settings.language.germanDesc') }}</p>
+            </ion-label>
+            <ion-radio slot="start" value="de"></ion-radio>
+          </ion-item>
+          
+          <ion-item>
+            <ion-label>
+              <h2>English</h2>
+              <p>{{ t('settings.language.englishDesc') }}</p>
+            </ion-label>
+            <ion-radio slot="start" value="en"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Game Settings -->
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>{{ t('settings.game.title') }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label>{{ t('settings.game.notifications') }}</ion-label>
+          <ion-toggle [(ngModel)]="notificationsEnabled" (ionChange)="toggleNotifications()"></ion-toggle>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label>{{ t('settings.game.sound') }}</ion-label>
+          <ion-toggle [(ngModel)]="soundEnabled" (ionChange)="toggleSound()"></ion-toggle>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label>{{ t('settings.game.vibration') }}</ion-label>
+          <ion-toggle [(ngModel)]="vibrationEnabled" (ionChange)="toggleVibration()"></ion-toggle>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Data Management -->
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>{{ t('settings.data.title') }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-button expand="block" color="success" (click)="exportData()">
+          <ion-icon name="download-outline" slot="start"></ion-icon>
+          {{ t('settings.data.export') }}
+        </ion-button>
+        
+        <ion-button expand="block" color="primary" (click)="importData()">
+          <ion-icon name="upload-outline" slot="start"></ion-icon>
+          {{ t('settings.data.import') }}
+        </ion-button>
+        
+        <ion-button expand="block" color="danger" (click)="resetGame()">
+          <ion-icon name="refresh-outline" slot="start"></ion-icon>
+          {{ t('settings.data.reset') }}
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- How to Play -->
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>{{ t('settings.howToPlay.title') }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="help-section">
+          <h3>{{ t('settings.howToPlay.basics') }}</h3>
+          <p>{{ t('settings.howToPlay.basicsDesc') }}</p>
+          
+          <h3>{{ t('settings.howToPlay.currency') }}</h3>
+          <p>{{ t('settings.howToPlay.currencyDesc') }}</p>
+          
+          <h3>{{ t('settings.howToPlay.leaderboard') }}</h3>
+          <p>{{ t('settings.howToPlay.leaderboardDesc') }}</p>
+          
+          <h3>{{ t('settings.howToPlay.premium') }}</h3>
+          <p>{{ t('settings.howToPlay.premiumDesc') }}</p>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- About -->
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>{{ t('settings.about.title') }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item lines="none">
+          <ion-label>
+            <h3>{{ t('settings.about.version') }}</h3>
+            <p>1.0.0</p>
+          </ion-label>
+        </ion-item>
+        
+        <ion-item lines="none">
+          <ion-label>
+            <h3>{{ t('settings.about.developer') }}</h3>
+            <p>Techlogic Solutions GmbH</p>
+          </ion-label>
+        </ion-item>
+        
+        <ion-item lines="none">
+          <ion-label>
+            <h3>{{ t('settings.about.contact') }}</h3>
+            <p>dev@tlos.at</p>
+          </ion-label>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

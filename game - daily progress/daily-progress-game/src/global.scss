@@ -1,0 +1,442 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/**
+ * Ionic Dark Mode
+ * -----------------------------------------------------
+ * For more info, please see:
+ * https://ionicframework.com/docs/theming/dark-mode
+ */
+
+/* @import "@ionic/angular/css/palettes/dark.always.css"; */
+/* @import "@ionic/angular/css/palettes/dark.class.css"; */
+@import "@ionic/angular/css/palettes/dark.system.css";
+
+// Custom Garden Theme Variables
+:root {
+  --garden-grass: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%);
+  --garden-soil: #8d6e63;
+  --garden-shadow: rgba(0, 0, 0, 0.2);
+  --garden-glow: rgba(76, 175, 80, 0.3);
+}
+
+// Base scrolling fix
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+// Android specific fixes
+.plt-android {
+  ion-tab-bar {
+    // On Android, add extra padding for navigation bar
+    padding-bottom: 24px !important;
+    height: 92px !important; // Updated height
+  }
+  
+  .game-container,
+  .shop-container,
+  .leaderboard-container,
+  .settings-container {
+    // Extra padding for Android navigation
+    padding-bottom: 116px !important; // Updated padding
+  }
+}
+
+// SIMPLE SOLUTION - container approach with safe area
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+ion-app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  padding-top: env(safe-area-inset-top, 0); // Respect status bar
+}
+
+ion-router-outlet {
+  flex: 1;
+  overflow: hidden;
+}
+
+ion-tabs {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  
+  ion-router-outlet {
+    flex: 1;
+    overflow: auto;
+  }
+  
+  ion-tab-bar {
+    position: sticky;
+    bottom: 0;
+    height: 68px;
+    min-height: 68px;
+    flex-shrink: 0;
+    background: var(--ion-tab-bar-background, var(--ion-background-color));
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    
+    @media (max-width: 768px) {
+      height: 92px;
+      min-height: 92px;
+      padding-bottom: 24px;
+    }
+  }
+}
+
+// Fix header positioning - respect safe area
+ion-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  
+  ion-toolbar {
+    --min-height: 56px;
+    --padding-start: 16px;
+    --padding-end: 16px;
+    padding-top: env(safe-area-inset-top, 20px); // Push down from status bar
+    min-height: calc(56px + env(safe-area-inset-top, 20px));
+  }
+}
+
+// Simple content - let flexbox handle it
+ion-content {
+  overflow-x: hidden;
+  
+  &::part(scroll) {
+    padding-bottom: 20px;
+    overflow-x: hidden;
+  }
+}
+
+// Simple containers - no complex positioning
+.game-container,
+.shop-container,
+.leaderboard-container,
+.settings-container {
+  padding-bottom: 20px;
+}
+
+// Fix alert positioning - respect safe area
+.plant-info-alert-simple {
+  --max-width: 350px;
+  --min-width: 280px;
+  
+  .alert-wrapper {
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    position: fixed;
+    bottom: 140px; // Position above tab bar
+    left: 50%;
+    transform: translateX(-50%);
+    
+    // Android specific position
+    .plt-android & {
+      bottom: 160px; // Higher on Android to account for navigation bar
+    }
+  }
+  
+  .alert-head {
+    padding: 16px;
+    background: linear-gradient(135deg, #66bb6a 0%, #4caf50 100%);
+    
+    h2 {
+      color: white !important;
+      font-size: 1.3rem;
+      font-weight: 600;
+      text-align: center;
+    }
+  }
+  
+  .alert-message {
+    padding: 20px !important;
+    white-space: pre-line;
+    line-height: 1.6;
+    color: var(--ion-text-color);
+    font-size: 0.95rem;
+  }
+  
+  .alert-button-group {
+    padding: 0;
+    display: flex;
+    
+    .alert-button {
+      margin: 0;
+      border-radius: 0;
+      border-top: 1px solid #e0e0e0;
+      font-weight: 600;
+      color: #4caf50;
+      flex: 1;
+      text-align: center;
+      padding: 14px;
+    }
+  }
+}
+
+// Plant Info Alert Styles (old, complex version) - fix positioning
+.plant-info-alert {
+  --max-width: 90%;
+  --min-width: 320px;
+  
+  .alert-wrapper {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    position: fixed;
+    bottom: 140px; // Position above tab bar
+    left: 50%;
+    transform: translateX(-50%);
+    
+    // Android specific position
+    .plt-android & {
+      bottom: 160px; // Higher on Android to account for navigation bar
+    }
+  }
+  
+  .alert-head {
+    padding: 20px;
+    background: linear-gradient(135deg, #66bb6a 0%, #4caf50 100%);
+    
+    h2 {
+      color: white !important;
+      font-size: 1.5rem;
+      font-weight: 600;
+      text-align: center;
+    }
+  }
+  
+  .alert-message {
+    padding: 0 !important;
+    max-height: 70vh;
+    overflow-y: auto;
+    
+    .plant-info-container {
+      padding: 20px;
+      
+      .plant-icon-wrapper {
+        text-align: center;
+        margin-bottom: 20px;
+        background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+        border-radius: 50%;
+        width: 100px;
+        height: 100px;
+        margin: 0 auto 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        
+        .plant-main-icon {
+          font-size: 60px;
+          
+          &.success { color: #4caf50; }
+          &.danger { color: #f44336; }
+          &.warning { color: #ff9800; }
+          &.tertiary { color: #9c27b0; }
+        }
+      }
+      
+      .plant-description {
+        text-align: center;
+        margin-bottom: 25px;
+        color: #666;
+        font-size: 0.95rem;
+        line-height: 1.5;
+        padding: 0 10px;
+      }
+      
+      .plant-stats {
+        background: #f9f9f9;
+        border-radius: 15px;
+        padding: 15px;
+        margin-bottom: 15px;
+        
+        .stat-row {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 10px 0;
+          border-bottom: 1px solid #e0e0e0;
+          
+          &:last-child {
+            border-bottom: none;
+          }
+          
+          .stat-label {
+            color: #888;
+            font-size: 0.9rem;
+            font-weight: 500;
+          }
+          
+          .stat-value {
+            color: #333;
+            font-weight: 600;
+            font-size: 0.95rem;
+            
+            &.ready {
+              color: #4caf50;
+              font-weight: 700;
+            }
+            
+            &.growing {
+              color: #ff9800;
+            }
+          }
+          
+          .progress-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+            max-width: 150px;
+            
+            .progress-bar {
+              flex: 1;
+              height: 8px;
+              background: #e0e0e0;
+              border-radius: 4px;
+              overflow: hidden;
+              position: relative;
+              
+              .progress-fill {
+                height: 100%;
+                background: linear-gradient(90deg, #4caf50 0%, #66bb6a 100%);
+                border-radius: 4px;
+                transition: width 0.3s ease;
+                box-shadow: 0 2px 4px rgba(76, 175, 80, 0.3);
+              }
+            }
+            
+            .progress-text {
+              color: #333;
+              font-weight: 600;
+              font-size: 0.85rem;
+              min-width: 35px;
+              text-align: right;
+            }
+          }
+        }
+      }
+      
+      .harvest-tip {
+        background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+        border: 1px solid #a5d6a7;
+        border-radius: 10px;
+        padding: 12px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #2e7d32;
+        font-size: 0.9rem;
+        
+        ion-icon {
+          font-size: 20px;
+          color: #4caf50;
+        }
+      }
+    }
+  }
+  
+  .alert-button-group {
+    padding: 0;
+    
+    .alert-button {
+      margin: 0;
+      border-radius: 0;
+      border-top: 1px solid #e0e0e0;
+      
+      &.ok-button {
+        font-weight: 600;
+        color: #4caf50;
+      }
+    }
+  }
+}
+
+// Toast above tabs - position directly above tab bar
+.toast-above-tabs {
+  position: fixed !important;
+  bottom: 72px !important; // 68px tab bar + 4px spacing
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  
+  @media (max-width: 768px) {
+    bottom: 96px !important; // 92px tab bar + 4px spacing
+  }
+}
+
+// Custom alert styles
+.custom-alert {
+  .alert-wrapper {
+    position: fixed !important;
+    bottom: 140px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    
+    // Android specific position
+    .plt-android & {
+      bottom: 160px !important;
+    }
+  }
+  
+  .alert-message {
+    white-space: pre-line !important;
+    line-height: 1.6 !important;
+  }
+  
+  .alert-button-group {
+    padding: 0;
+    
+    .alert-button {
+      margin: 0;
+      border-radius: 0;
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+      
+      &.alert-button-full {
+        flex: 1 1 100%;
+        max-width: 100% !important;
+        width: 100% !important;
+        font-weight: 600;
+        color: var(--ion-color-primary);
+        text-align: center;
+        padding: 14px;
+        font-size: 16px;
+      }
+    }
+  }
+}

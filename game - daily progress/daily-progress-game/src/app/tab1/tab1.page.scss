@@ -1,0 +1,295 @@
+ion-header {
+  &.custom-header {
+    ion-toolbar {
+      --background: linear-gradient(180deg, #4caf50 0%, #66bb6a 100%);
+      --color: white;
+      --min-height: 80px;
+      padding-top: env(safe-area-inset-top);
+      
+      ion-title {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 10px;
+        top: auto;
+        
+        .title-container {
+          text-align: center;
+          font-size: 22px;
+          font-weight: bold;
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+      }
+      
+      ion-buttons {
+        position: absolute;
+        right: 10px;
+        bottom: 15px;
+        top: auto;
+      }
+    }
+  }
+}
+
+ion-content {
+  --padding-bottom: 0;
+}
+
+.game-container {
+  padding: 16px;
+  background: linear-gradient(180deg, #81c784 0%, #4caf50 100%);
+  min-height: 100vh;
+  overflow-x: hidden;
+  padding-bottom: 20px;
+}
+
+.stats-card {
+  margin-bottom: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  
+  ion-card-content {
+    padding: 16px;
+  }
+  
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 12px;
+    
+    .stat-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+      padding: 12px;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease;
+      
+      &:hover {
+        transform: scale(1.05);
+      }
+      
+      ion-icon {
+        font-size: 24px;
+      }
+      
+      span {
+        font-size: 16px;
+        font-weight: bold;
+        color: var(--ion-color-dark);
+      }
+    }
+  }
+  
+  .experience-bar {
+    height: 8px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+  }
+  
+  .experience-text {
+    text-align: center;
+    font-size: 12px;
+    color: var(--ion-color-medium);
+    margin: 0;
+  }
+}
+
+.daily-reward-card {
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, var(--ion-color-secondary-tint) 0%, var(--ion-color-secondary-shade) 100%);
+  
+  ion-card-title {
+    color: white;
+  }
+  
+  ion-button {
+    --background: white;
+    --color: var(--ion-color-secondary);
+  }
+}
+
+.garden-card {
+  margin-bottom: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  
+  ion-card-header {
+    ion-card-title {
+      color: var(--ion-color-dark);
+    }
+  }
+  
+  .garden-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    padding: 8px;
+    
+    @media (max-width: 576px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .plant-slot {
+      aspect-ratio: 1;
+      background: linear-gradient(135deg, #8d6e63 0%, #6d4c41 100%);
+      border-radius: 12px;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+      
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+      }
+      
+      &.occupied {
+        background: linear-gradient(135deg, #66bb6a 0%, #4caf50 100%);
+        
+        .plant-container {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          
+          .plant-icon {
+            font-size: 48px;
+            margin-bottom: 4px;
+            
+            ion-icon {
+              animation: gentle-sway 3s ease-in-out infinite;
+              
+              &.ready-plant {
+                animation: bounce-ready 1s ease-in-out infinite;
+                filter: drop-shadow(0 0 8px rgba(255, 223, 0, 0.6));
+              }
+            }
+          }
+          
+          .growth-bar {
+            width: 90%;
+            height: 6px;
+            border-radius: 3px;
+            margin: 4px 0;
+          }
+          
+          .plant-status {
+            font-size: 11px;
+            color: white;
+            font-weight: bold;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            
+            .ready-text {
+              color: #ffeb3b;
+              animation: pulse 1.5s ease-in-out infinite;
+            }
+          }
+        }
+      }
+      
+      .empty-slot {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        opacity: 0.6;
+        transition: opacity 0.2s ease;
+        
+        ion-icon {
+          font-size: 32px;
+          color: rgba(255, 255, 255, 0.5);
+          margin-bottom: 4px;
+        }
+        
+        p {
+          font-size: 10px;
+          color: rgba(255, 255, 255, 0.7);
+          text-align: center;
+          margin: 0;
+        }
+        
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+  }
+}
+
+.actions-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  
+  .action-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    
+    ion-button {
+      flex: 1;
+      max-width: 200px;
+    }
+  }
+}
+
+@keyframes gentle-sway {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+
+@keyframes gentle-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes bounce-ready {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-10px) scale(1.1); }
+}
+
+@keyframes pulse-ready {
+  0%, 100% { box-shadow: 0 4px 8px var(--garden-shadow); }
+  50% { box-shadow: 0 6px 16px var(--garden-glow); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+  gap: 16px;
+  
+  ion-spinner {
+    --color: white;
+  }
+  
+  p {
+    color: white;
+    font-size: 16px;
+  }
+}

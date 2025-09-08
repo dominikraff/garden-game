@@ -60,3 +60,6 @@ Thumbs.db
 # Coverage / Testing
 /coverage/
 /test-output/
+game - daily progress/daily-progress-game/node_modules/
+game - daily progress/daily-progress-game/www/
+game - daily progress/daily-progress-game/.angular/

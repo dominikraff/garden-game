@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Garden Game Icon Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: #f0f0f0;
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        canvas {
+            border: 1px solid #ddd;
+            margin: 10px;
+            cursor: pointer;
+        }
+        .size-label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+        button {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Garden Game App Icon</h2>
+        <div>
+            <canvas id="icon512" width="512" height="512"></canvas>
+            <div class="size-label">512x512 - Click to download</div>
+        </div>
+        <div>
+            <canvas id="icon192" width="192" height="192"></canvas>
+            <div class="size-label">192x192 - Click to download</div>
+        </div>
+        <div>
+            <canvas id="icon96" width="96" height="96"></canvas>
+            <div class="size-label">96x96 - Click to download</div>
+        </div>
+        <button onclick="generateAllIcons()">Generate All Icon Sizes</button>
+    </div>
+
+    <script>
+        function drawIcon(canvas) {
+            const ctx = canvas.getContext('2d');
+            const size = canvas.width;
+            
+            // Background gradient
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#66bb6a');
+            gradient.addColorStop(1, '#4caf50');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, size, size);
+            
+            // Draw garden bed (brown)
+            ctx.fillStyle = '#8d6e63';
+            ctx.fillRect(0, size * 0.7, size, size * 0.3);
+            
+            // Draw sun
+            ctx.fillStyle = '#ffd54f';
+            ctx.beginPath();
+            ctx.arc(size * 0.15, size * 0.15, size * 0.08, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Sun rays
+            ctx.strokeStyle = '#ffd54f';
+            ctx.lineWidth = size * 0.015;
+            for (let i = 0; i < 8; i++) {
+                const angle = (i * Math.PI) / 4;
+                const x1 = size * 0.15 + Math.cos(angle) * size * 0.11;
+                const y1 = size * 0.15 + Math.sin(angle) * size * 0.11;
+                const x2 = size * 0.15 + Math.cos(angle) * size * 0.15;
+                const y2 = size * 0.15 + Math.sin(angle) * size * 0.15;
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x2, y2);
+                ctx.stroke();
+            }
+            
+            // Draw flower 1 (left)
+            const flower1X = size * 0.25;
+            const flower1Y = size * 0.55;
+            
+            // Stem
+            ctx.strokeStyle = '#2e7d32';
+            ctx.lineWidth = size * 0.02;
+            ctx.beginPath();
+            ctx.moveTo(flower1X, flower1Y);
+            ctx.lineTo(flower1X, size * 0.75);
+            ctx.stroke();
+            
+            // Petals
+            ctx.fillStyle = '#ff6b9d';
+            for (let i = 0; i < 5; i++) {
+                const angle = (i * Math.PI * 2) / 5 - Math.PI / 2;
+                const petalX = flower1X + Math.cos(angle) * size * 0.06;
+                const petalY = flower1Y + Math.sin(angle) * size * 0.06;
+                ctx.beginPath();
+                ctx.arc(petalX, petalY, size * 0.04, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            
+            // Center
+            ctx.fillStyle = '#feca57';
+            ctx.beginPath();
+            ctx.arc(flower1X, flower1Y, size * 0.03, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Draw flower 2 (center)
+            const flower2X = size * 0.5;
+            const flower2Y = size * 0.5;
+            
+            // Stem
+            ctx.strokeStyle = '#2e7d32';
+            ctx.beginPath();
+            ctx.moveTo(flower2X, flower2Y);
+            ctx.lineTo(flower2X, size * 0.75);
+            ctx.stroke();
+            
+            // Petals
+            ctx.fillStyle = '#ee5a6f';
+            for (let i = 0; i < 6; i++) {
+                const angle = (i * Math.PI * 2) / 6;
+                const petalX = flower2X + Math.cos(angle) * size * 0.08;
+                const petalY = flower2Y + Math.sin(angle) * size * 0.08;
+                ctx.beginPath();
+                ctx.arc(petalX, petalY, size * 0.05, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            
+            // Center
+            ctx.fillStyle = '#fff200';
+            ctx.beginPath();
+            ctx.arc(flower2X, flower2Y, size * 0.04, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Draw plant 3 (right)
+            const plant3X = size * 0.75;
+            const plant3Y = size * 0.6;
+            
+            // Stem
+            ctx.strokeStyle = '#2e7d32';
+            ctx.beginPath();
+            ctx.moveTo(plant3X, plant3Y);
+            ctx.lineTo(plant3X, size * 0.75);
+            ctx.stroke();
+            
+            // Leaves
+            ctx.fillStyle = '#4caf50';
+            // Left leaf
+            ctx.beginPath();
+            ctx.ellipse(plant3X - size * 0.05, plant3Y, size * 0.06, size * 0.03, -Math.PI / 4, 0, Math.PI * 2);
+            ctx.fill();
+            // Right leaf
+            ctx.beginPath();
+            ctx.ellipse(plant3X + size * 0.05, plant3Y, size * 0.06, size * 0.03, Math.PI / 4, 0, Math.PI * 2);
+            ctx.fill();
+            // Top leaf
+            ctx.beginPath();
+            ctx.ellipse(plant3X, plant3Y - size * 0.05, size * 0.03, size * 0.07, 0, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Add some sparkles
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+            const sparkles = [
+                [0.35, 0.35, 0.015],
+                [0.65, 0.3, 0.012],
+                [0.8, 0.4, 0.01],
+                [0.2, 0.4, 0.01]
+            ];
+            
+            sparkles.forEach(([x, y, r]) => {
+                ctx.beginPath();
+                ctx.arc(size * x, size * y, size * r, 0, Math.PI * 2);
+                ctx.fill();
+            });
+        }
+
+        // Draw icons on page load
+        drawIcon(document.getElementById('icon512'));
+        drawIcon(document.getElementById('icon192'));
+        drawIcon(document.getElementById('icon96'));
+
+        // Download functionality
+        document.getElementById('icon512').onclick = function() {
+            downloadIcon(this, 'icon-512x512.png');
+        };
+        document.getElementById('icon192').onclick = function() {
+            downloadIcon(this, 'icon-192x192.png');
+        };
+        document.getElementById('icon96').onclick = function() {
+            downloadIcon(this, 'icon-96x96.png');
+        };
+
+        function downloadIcon(canvas, filename) {
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+
+        function generateAllIcons() {
+            const sizes = [
+                [1024, 'icon-1024x1024.png'],
+                [512, 'icon-512x512.png'],
+                [384, 'icon-384x384.png'],
+                [192, 'icon-192x192.png'],
+                [152, 'icon-152x152.png'],
+                [144, 'icon-144x144.png'],
+                [128, 'icon-128x128.png'],
+                [96, 'icon-96x96.png'],
+                [72, 'icon-72x72.png'],
+                [48, 'icon-48x48.png']
+            ];
+
+            sizes.forEach(([size, filename]) => {
+                const canvas = document.createElement('canvas');
+                canvas.width = size;
+                canvas.height = size;
+                drawIcon(canvas);
+                downloadIcon(canvas, filename);
+            });
+            
+            alert('All icon sizes have been generated! Check your downloads folder.');
+        }
+    </script>
+</body>
+</html>

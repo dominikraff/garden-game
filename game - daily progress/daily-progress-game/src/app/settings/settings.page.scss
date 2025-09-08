@@ -1,0 +1,55 @@
+ion-header {
+  &.custom-header {
+    ion-toolbar {
+      --background: linear-gradient(180deg, #4caf50 0%, #66bb6a 100%);
+      --color: white;
+      --min-height: 80px;
+      padding-top: env(safe-area-inset-top);
+      
+      ion-title {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 10px;
+        top: auto;
+        
+        .title-container {
+          text-align: center;
+          font-size: 22px;
+          font-weight: bold;
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+      }
+    }
+  }
+}
+
+ion-content {
+  height: 100%;
+}
+
+.settings-container {
+  padding: 16px;
+  padding-bottom: 80px; // Extra padding to prevent content going under tab bar
+  min-height: 100%;
+}
+
+.help-section {
+  h3 {
+    color: var(--ion-color-primary);
+    margin-top: 16px;
+    margin-bottom: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+  
+  p {
+    margin-bottom: 12px;
+    line-height: 1.5;
+    color: var(--ion-color-medium);
+  }
+}

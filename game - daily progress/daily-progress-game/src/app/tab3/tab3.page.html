@@ -1,0 +1,133 @@
+<ion-header [translucent]="false" class="custom-header">
+  <ion-toolbar color="primary">
+    <ion-title>
+      <div class="title-container">
+        {{ t('leaderboard.title') }}
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">{{ t('leaderboard.title') }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="leaderboard-container" *ngIf="player">
+    <!-- Your Rank Card -->
+    <ion-card class="player-rank-card">
+      <ion-card-content>
+        <div class="player-rank-info">
+          <div class="rank-badge">
+            <ion-icon name="trophy-outline" color="warning"></ion-icon>
+            <span>{{ t('leaderboard.rank') }}{{ playerRank }}</span>
+          </div>
+          <div class="player-stats">
+            <h2>{{ player.name }}</h2>
+            <p>{{ t('leaderboard.level') }} {{ player.level }} • {{ calculateScore() }} {{ t('leaderboard.points') }}</p>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Leaderboard Categories -->
+    <ion-segment [(ngModel)]="selectedCategory" (ionChange)="onCategoryChange($event)">
+      <ion-segment-button value="level">
+        <ion-icon name="trending-up-outline"></ion-icon>
+        <ion-label>{{ t('leaderboard.category.level') }}</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="coins">
+        <ion-icon name="cash-outline"></ion-icon>
+        <ion-label>{{ t('leaderboard.category.wealth') }}</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="daily">
+        <ion-icon name="calendar-outline"></ion-icon>
+        <ion-label>{{ t('leaderboard.category.daily') }}</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <!-- Leaderboard List -->
+    <ion-card class="leaderboard-card">
+      <ion-card-header>
+        <ion-card-title>
+          {{ getCategoryTitle() }}
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="leaderboard-list">
+          <div 
+            class="leaderboard-entry" 
+            *ngFor="let entry of getFilteredLeaderboard(); let i = index"
+            [class.current-player]="entry.playerId === player.id">
+            
+            <div class="rank-position">
+              <ion-icon 
+                *ngIf="i < 3" 
+                [name]="getTrophyIcon(i)" 
+                [color]="getTrophyColor(i)">
+              </ion-icon>
+              <span *ngIf="i >= 3" class="rank-number">{{ i + 1 }}</span>
+            </div>
+            
+            <div class="player-info">
+              <h3>
+                {{ entry.playerName }}
+                <ion-icon 
+                  *ngIf="isPlayerActive(entry)" 
+                  name="ellipse" 
+                  color="success" 
+                  style="font-size: 10px; margin-left: 5px; vertical-align: middle;"
+                  [title]="t('leaderboard.online')">
+                </ion-icon>
+              </h3>
+              <p>{{ t('leaderboard.level') }} {{ entry.level }}</p>
+            </div>
+            
+            <div class="score-info">
+              <span class="score">{{ getScoreText(entry, selectedCategory) }}</span>
+              <ion-icon [name]="getCategoryIcon(selectedCategory)" color="medium"></ion-icon>
+            </div>
+          </div>
+          
+          <!-- Empty state -->
+          <div *ngIf="getFilteredLeaderboard().length === 0" class="empty-leaderboard">
+            <ion-icon name="people-outline" color="medium"></ion-icon>
+            <p>{{ t('leaderboard.empty') }}</p>
+            <small>{{ t('leaderboard.emptySubtext') }}</small>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Achievement Badges -->
+    <ion-card class="achievements-card">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="medal-outline"></ion-icon>
+          {{ t('leaderboard.achievements') }}
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="achievements-grid">
+          <div 
+            class="achievement-badge" 
+            *ngFor="let achievement of playerAchievements"
+            [class.unlocked]="achievement.unlocked">
+            <ion-icon [name]="achievement.icon" [color]="achievement.unlocked ? achievement.color : 'medium'"></ion-icon>
+            <h4>{{ achievement.name }}</h4>
+            <p>{{ achievement.description }}</p>
+            <ion-badge *ngIf="achievement.unlocked" color="success">{{ t('leaderboard.unlocked') }}</ion-badge>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="!player" class="loading-container">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>{{ t('leaderboard.loading') }}</p>
+  </div>
+</ion-content>

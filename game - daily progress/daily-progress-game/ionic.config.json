@@ -1,0 +1,7 @@
+{
+  "name": "daily-progress-game",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

@@ -1,0 +1,82 @@
+// Daily Progress Garden Game - Custom Theme
+// For information on how to create your own theme, please see:
+// http://ionicframework.com/docs/theming/
+
+// Garden Game Color Palette
+:root {
+  // Primary Garden Theme Colors
+  --ion-color-primary: #4caf50;
+  --ion-color-primary-rgb: 76, 175, 80;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #43a047;
+  --ion-color-primary-tint: #5ebf62;
+
+  // Nature Green (Success)
+  --ion-color-success: #2e7d32;
+  --ion-color-success-rgb: 46, 125, 50;
+  --ion-color-success-contrast: #ffffff;
+  --ion-color-success-contrast-rgb: 255, 255, 255;
+  --ion-color-success-shade: #2c6530;
+  --ion-color-success-tint: #4caf50;
+
+  // Golden Coins (Warning)
+  --ion-color-warning: #ff9800;
+  --ion-color-warning-rgb: 255, 152, 0;
+  --ion-color-warning-contrast: #000000;
+  --ion-color-warning-contrast-rgb: 0, 0, 0;
+  --ion-color-warning-shade: #e08600;
+  --ion-color-warning-tint: #ffab40;
+
+  // Premium Purple (Secondary)
+  --ion-color-secondary: #9c27b0;
+  --ion-color-secondary-rgb: 156, 39, 176;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #8919a3;
+  --ion-color-secondary-tint: #ab47bc;
+
+  // Sky Blue (Tertiary)
+  --ion-color-tertiary: #03a9f4;
+  --ion-color-tertiary-rgb: 3, 169, 244;
+  --ion-color-tertiary-contrast: #ffffff;
+  --ion-color-tertiary-contrast-rgb: 255, 255, 255;
+  --ion-color-tertiary-shade: #0396d6;
+  --ion-color-tertiary-tint: #29b6f6;
+
+  // Error Red
+  --ion-color-danger: #f44336;
+  --ion-color-danger-rgb: 244, 67, 54;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-contrast-rgb: 255, 255, 255;
+  --ion-color-danger-shade: #d73930;
+  --ion-color-danger-tint: #f5564a;
+
+  // Custom Garden Colors
+  --garden-soil: #8d6e63;
+  --garden-grass: #66bb6a;
+  --garden-flower: #e91e63;
+  --garden-fruit: #ff7043;
+  --garden-herb: #ab47bc;
+  --garden-vegetable: #4caf50;
+  
+  // UI Enhancement
+  --garden-shadow: rgba(0, 0, 0, 0.15);
+  --garden-glow: rgba(76, 175, 80, 0.3);
+  --premium-gradient: linear-gradient(135deg, #9c27b0, #e91e63);
+}
+
+// Dark Theme
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ion-color-primary: #66bb6a;
+    --ion-color-primary-rgb: 102, 187, 106;
+    --ion-color-primary-shade: #5ca65f;
+    --ion-color-primary-tint: #75c67b;
+
+    --garden-soil: #5d4037;
+    --garden-grass: #4caf50;
+    --garden-shadow: rgba(0, 0, 0, 0.3);
+    --garden-glow: rgba(102, 187, 106, 0.4);
+  }
+}

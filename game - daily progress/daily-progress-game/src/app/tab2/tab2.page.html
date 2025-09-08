@@ -1,0 +1,176 @@
+<ion-header [translucent]="false" class="custom-header">
+  <ion-toolbar color="primary">
+    <ion-title>
+      <div class="title-container">
+        {{ t('shop.title') }}
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">{{ t('shop.title') }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="shop-container" *ngIf="player">
+    <!-- Currency Display -->
+    <ion-card class="currency-card">
+      <ion-card-content>
+        <div class="currency-display">
+          <div class="currency-item" [title]="t('shop.coins.tooltip')">
+            <ion-icon name="cash-outline" color="warning"></ion-icon>
+            <span>{{ player.coins | number }}</span>
+          </div>
+          <div class="currency-item" [title]="t('shop.gems.tooltip')">
+            <ion-icon name="diamond-outline" color="secondary"></ion-icon>
+            <span>{{ player.gems | number }}</span>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Premium Section -->
+    <ion-card class="premium-card" *ngIf="!player.isPremium">
+      <ion-card-header>
+        <ion-card-title color="primary">
+          <ion-icon name="star-outline"></ion-icon>
+          {{ t('shop.premium.title') }}
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>{{ t('shop.premium.benefits') }}</p>
+        <ul>
+          <li>{{ t('shop.premium.benefit1') }}</li>
+          <li>{{ t('shop.premium.benefit2') }}</li>
+          <li>{{ t('shop.premium.benefit3') }}</li>
+          <li>{{ t('shop.premium.benefit4') }}</li>
+        </ul>
+        <ion-button 
+          expand="block" 
+          color="primary"
+          (click)="purchasePremium()">
+          <ion-icon name="star" slot="start"></ion-icon>
+          {{ t('shop.premium.buyNow') }}
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Premium Status -->
+    <ion-card class="premium-status-card" *ngIf="player.isPremium">
+      <ion-card-content>
+        <div class="premium-status">
+          <ion-icon name="star" color="primary"></ion-icon>
+          <span>{{ t('shop.premium.member') }}</span>
+          <ion-badge color="success">Active</ion-badge>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Boost Section -->
+    <ion-card class="shop-section-card">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="flash-outline"></ion-icon>
+          {{ t('shop.boosts.title') }}
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="shop-grid">
+          <div class="shop-item" *ngFor="let item of boostItems">
+            <div class="item-icon">
+              <ion-icon [name]="item.icon" [color]="item.color"></ion-icon>
+            </div>
+            <h3>{{ item.name }}</h3>
+            <p>{{ item.description }}</p>
+            <div class="item-price">
+              <ion-icon [name]="item.currency === 'coins' ? 'cash-outline' : 'diamond-outline'" 
+                        [color]="item.currency === 'coins' ? 'warning' : 'secondary'"></ion-icon>
+              <span>{{ item.price }}</span>
+            </div>
+            <ion-button 
+              size="small" 
+              fill="outline"
+              [disabled]="!canAfford(item) || isBoostOnCooldown(item.id)"
+              (click)="purchaseBoost(item)">
+              <span *ngIf="!isBoostOnCooldown(item.id)">{{ t('shop.buy.now') }}</span>
+              <span *ngIf="isBoostOnCooldown(item.id)">{{ getBoostCooldownTime(item.id) }}</span>
+            </ion-button>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Seeds Section -->
+    <ion-card class="shop-section-card">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="leaf-outline"></ion-icon>
+          {{ t('shop.seeds.title') }}
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="shop-grid">
+          <div class="shop-item" *ngFor="let item of seedItems">
+            <div class="item-icon">
+              <ion-icon [name]="item.icon" [color]="item.color"></ion-icon>
+            </div>
+            <h3>{{ item.name }}</h3>
+            <p>{{ item.description }}</p>
+            <div class="item-price">
+              <ion-icon [name]="item.currency === 'coins' ? 'cash-outline' : 'diamond-outline'" 
+                        [color]="item.currency === 'coins' ? 'warning' : 'secondary'"></ion-icon>
+              <span>{{ item.price }}</span>
+            </div>
+            <ion-button 
+              size="small" 
+              fill="outline"
+              [disabled]="!canAfford(item)"
+              (click)="purchaseSeed(item)">
+              {{ t('shop.buy.pack') }}
+            </ion-button>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Watch Ad Section -->
+    <ion-card class="ad-card">
+      <ion-card-header>
+        <ion-card-title color="primary">
+          <ion-icon name="play-outline"></ion-icon>
+          {{ t('shop.ads.title') }}
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>{{ t('shop.ads.desc') }}</p>
+        <div class="ad-rewards">
+          <div class="reward-item">
+            <ion-icon name="cash-outline" color="warning"></ion-icon>
+            <span>{{ t('shop.ads.coins') }}</span>
+          </div>
+          <div class="reward-item">
+            <ion-icon name="flash-outline" color="danger"></ion-icon>
+            <span>{{ t('shop.ads.boost') }}</span>
+          </div>
+        </div>
+        <ion-button 
+          expand="block" 
+          color="primary"
+          (click)="watchAd()"
+          [disabled]="!canWatchAd()">
+          <ion-icon name="play" slot="start"></ion-icon>
+          {{ canWatchAd() ? t('shop.ads.watch') : t('shop.ads.next') + ' ' + getAdCooldownTime() }}
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="!player" class="loading-container">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>{{ t('shop.loading') }}</p>
+  </div>
+</ion-content>

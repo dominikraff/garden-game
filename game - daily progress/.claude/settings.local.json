@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(ionic start:*)",
+      "Bash(npm run build:*)",
+      "Bash(ionic serve:*)",
+      "Bash(npx cap add:*)",
+      "Bash(npx cap:*)",
+      "Bash(ionic generate:*)",
+      "Bash(curl:*)",
+      "Bash(dir:*)",
+      "Bash(find:*)",
+      "Bash(magick:*)",
+      "Bash(convert:*)",
+      "Bash(inkscape:*)",
+      "Bash(where convert)",
+      "Bash(node:*)",
+      "Bash(npm:*)",
+      "Bash(java:*)",
+      "Bash(where java)",
+      "Bash(start resourcesicon-generator.html)",
+      "Bash(python:*)",
+      "Bash(py generate_icon.py:*)",
+      "Bash(gradlew:*)",
+      "Bash(.gradlew:*)",
+      "Bash(ionic capacitor:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

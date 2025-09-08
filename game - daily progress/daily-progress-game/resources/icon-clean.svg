@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#66BB6A;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4CAF50;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="leafGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#43A047;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2E7D32;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background with rounded corners -->
+  <rect width="1024" height="1024" rx="200" ry="200" fill="url(#bgGrad)"/>
+  
+  <!-- Simple, clean plant icon -->
+  <!-- Stem -->
+  <rect x="492" y="600" width="40" height="280" rx="20" fill="#6D4C41"/>
+  
+  <!-- Main leaf - large center -->
+  <ellipse cx="512" cy="450" rx="180" ry="120" fill="url(#leafGrad)"/>
+  
+  <!-- Left leaf -->
+  <ellipse cx="380" cy="520" rx="120" ry="80" fill="#388E3C" transform="rotate(-30 380 520)"/>
+  
+  <!-- Right leaf -->
+  <ellipse cx="644" cy="520" rx="120" ry="80" fill="#388E3C" transform="rotate(30 644 520)"/>
+  
+  <!-- Small top leaf -->
+  <ellipse cx="512" cy="350" rx="80" ry="50" fill="#66BB6A"/>
+  
+  <!-- Stylized ground/pot -->
+  <rect x="312" y="800" width="400" height="120" rx="60" fill="#8D6E63"/>
+  <rect x="332" y="780" width="360" height="60" rx="30" fill="#A1887F"/>
+  
+  <!-- Simple coin symbol in corner -->
+  <circle cx="200" cy="200" r="60" fill="#FFD700" stroke="#FFA000" stroke-width="6"/>
+  <text x="200" y="220" text-anchor="middle" fill="#FF8F00" font-size="60" font-weight="bold" font-family="Arial">€</text>
+  
+  <!-- Simple gem in opposite corner -->
+  <polygon points="824,240 844,200 864,240 844,280" fill="#42A5F5"/>
+  <polygon points="824,240 844,200 864,240" fill="#64B5F6"/>
+  
+  <!-- Small decorative dots for visual balance -->
+  <circle cx="150" cy="800" r="15" fill="#FF9800"/>
+  <circle cx="874" cy="800" r="15" fill="#E91E63"/>
+</svg>

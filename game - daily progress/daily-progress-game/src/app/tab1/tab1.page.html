@@ -1,0 +1,120 @@
+<ion-header [translucent]="false" class="custom-header">
+  <ion-toolbar color="primary">
+    <ion-title>
+      <div class="title-container">
+        {{ t('garden.title') }}
+      </div>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="showDailyReward()" *ngIf="dailyReward">
+        <ion-icon name="gift-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">{{ t('garden.title') }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="game-container" *ngIf="player && garden">
+    <!-- Player Stats -->
+    <ion-card class="stats-card">
+      <ion-card-content>
+        <div class="stats-row">
+          <div class="stat-item" [attr.title]="t('garden.stats.coinsTooltip')">
+            <ion-icon name="cash-outline" color="warning"></ion-icon>
+            <span>{{ player.coins | number }}</span>
+          </div>
+          <div class="stat-item" [attr.title]="t('garden.stats.gemsTooltip')">
+            <ion-icon name="diamond-outline" color="secondary"></ion-icon>
+            <span>{{ player.gems | number }}</span>
+          </div>
+          <div class="stat-item" [attr.title]="t('garden.stats.levelTooltip')">
+            <ion-icon name="trophy-outline" color="tertiary"></ion-icon>
+            <span>{{ t('garden.level') }} {{ player.level }}</span>
+          </div>
+        </div>
+        <ion-progress-bar 
+          [value]="getExperienceProgress()" 
+          color="medium"
+          class="experience-bar">
+        </ion-progress-bar>
+        <p class="experience-text" [attr.title]="t('garden.stats.xpTooltip')">{{ player.experience }}/{{ getExperienceNeeded() }} XP</p>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Garden Grid -->
+    <ion-card class="garden-card">
+      <ion-card-header>
+        <ion-card-title>{{ t('garden.title') }} ({{ garden.plants.length }}/{{ garden.maxPlants }})</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="garden-grid">
+          <div 
+            class="plant-slot" 
+            *ngFor="let slot of getGardenSlots(); let i = index"
+            [class.occupied]="slot"
+            (click)="handleSlotClick(slot, i)">
+            
+            <div *ngIf="slot" class="plant-container" [attr.title]="getPlantTooltip(slot)">
+              <div class="plant-icon">
+                <ion-icon 
+                  [name]="getPlantIcon(slot.type, slot.growth)" 
+                  [color]="getPlantColor(slot.type)"
+                  [class.ready-plant]="slot.isReady">
+                </ion-icon>
+              </div>
+              <ion-progress-bar 
+                [value]="slot.growth / 100" 
+                [color]="slot.isReady ? 'success' : 'primary'"
+                class="growth-bar">
+              </ion-progress-bar>
+              <div class="plant-status">
+                <span *ngIf="slot.isReady" class="ready-text">{{ t('garden.ready') }}</span>
+                <span *ngIf="!slot.isReady">{{ slot.growth.toFixed(0) }}%</span>
+              </div>
+            </div>
+            
+            <div *ngIf="!slot" class="empty-slot">
+              <ion-icon name="add-outline"></ion-icon>
+              <p>{{ t('garden.plantSeed') }}</p>
+            </div>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Quick Actions -->
+    <ion-card class="actions-card">
+      <ion-card-content>
+        <div class="action-buttons">
+          <ion-button 
+            fill="outline" 
+            color="success"
+            (click)="harvestAll()"
+            [disabled]="!hasReadyPlants()">
+            <ion-icon name="leaf-outline" slot="start"></ion-icon>
+            {{ t('garden.harvestAll') }}
+          </ion-button>
+          <ion-button 
+            fill="outline" 
+            color="primary"
+            (click)="openSeedSelector()">
+            <ion-icon name="add-outline" slot="start"></ion-icon>
+            {{ t('garden.plantSeeds') }}
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="!player || !garden" class="loading-container">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>{{ t('garden.loading') }}</p>
+  </div>
+</ion-content>

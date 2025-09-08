@@ -1,0 +1,249 @@
+ion-header {
+  &.custom-header {
+    ion-toolbar {
+      --background: linear-gradient(180deg, #4caf50 0%, #66bb6a 100%);
+      --color: white;
+      --min-height: 80px;
+      padding-top: env(safe-area-inset-top);
+      
+      ion-title {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 10px;
+        top: auto;
+        
+        .title-container {
+          text-align: center;
+          font-size: 22px;
+          font-weight: bold;
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+      }
+    }
+  }
+}
+
+ion-content {
+  --padding-bottom: 0;
+}
+
+.shop-container {
+  padding: 16px;
+  padding-bottom: 80px; // Extra padding for tab bar and scrolling
+}
+
+.currency-card {
+  margin-bottom: 16px;
+  
+  .currency-display {
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+    
+    .currency-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      cursor: help;
+      position: relative;
+      
+      ion-icon {
+        font-size: 32px;
+      }
+      
+      span {
+        font-weight: bold;
+        font-size: 18px;
+      }
+    }
+  }
+}
+
+.premium-card, .premium-status-card {
+  margin-bottom: 16px;
+  
+  .premium-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    
+    ion-icon {
+      font-size: 24px;
+    }
+    
+    span {
+      font-weight: bold;
+      font-size: 18px;
+    }
+  }
+  
+  ul {
+    margin: 16px 0;
+    padding-left: 20px;
+    
+    li {
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+  }
+}
+
+.shop-section-card {
+  margin-bottom: 20px;
+  
+  ion-card-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    
+    ion-icon {
+      font-size: 24px;
+    }
+  }
+}
+
+.shop-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+  
+  .shop-item {
+    background: var(--ion-color-light);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 200px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    .item-icon {
+      ion-icon {
+        font-size: 48px;
+        margin-bottom: 8px;
+      }
+    }
+    
+    h3 {
+      font-size: 16px;
+      font-weight: bold;
+      margin: 0;
+      color: var(--ion-color-dark);
+    }
+    
+    p {
+      font-size: 12px;
+      color: var(--ion-color-medium);
+      margin: 0;
+      flex-grow: 1;
+      line-height: 1.3;
+    }
+    
+    .item-price {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      margin: 8px 0;
+      font-weight: bold;
+      color: var(--ion-color-dark);
+      
+      ion-icon {
+        font-size: 18px;
+      }
+      
+      span {
+        font-size: 16px;
+      }
+    }
+    
+    ion-button {
+      margin: 0;
+      --padding-top: 8px;
+      --padding-bottom: 8px;
+    }
+  }
+}
+
+.ad-card {
+  margin-bottom: 16px;
+  
+  ion-card-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    
+    ion-icon {
+      font-size: 24px;
+    }
+  }
+  
+  .ad-rewards {
+    display: flex;
+    justify-content: space-around;
+    margin: 16px 0;
+    
+    .reward-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      
+      ion-icon {
+        font-size: 24px;
+      }
+      
+      span {
+        font-size: 14px;
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+  gap: 16px;
+  
+  ion-spinner {
+    --color: var(--ion-color-primary);
+  }
+  
+  p {
+    color: var(--ion-color-medium);
+    font-size: 16px;
+  }
+}
+
+// Premium card special styling
+.premium-card {
+  background: linear-gradient(135deg, var(--ion-color-warning-tint) 0%, var(--ion-color-warning-shade) 100%);
+  
+  ion-card-content {
+    color: var(--ion-color-warning-contrast);
+  }
+  
+  ion-card-title {
+    color: var(--ion-color-warning-contrast);
+  }
+}
+
+@media (min-width: 768px) {
+  .shop-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}
