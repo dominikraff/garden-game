@@ -98,20 +98,20 @@ export class GameService {
       // Load active boosts
       if (boostsData.value) {
         const boosts = JSON.parse(boostsData.value);
-        console.log('Loading saved boosts:', boosts);
+        // Loading saved boosts
         this.activeBoosts.clear();
         Object.entries(boosts).forEach(([boostId, expiryTime]) => {
           const expiryDate = new Date(expiryTime as string);
           const now = new Date();
-          console.log(`Loading boost ${boostId}: expires ${expiryDate}, now ${now}, valid: ${expiryDate > now}`);
+          // Check if boost is still valid
           if (expiryDate > now) {
             this.activeBoosts.set(boostId, expiryDate);
-            console.log(`Boost ${boostId} loaded and active`);
+            // Boost loaded and active
           }
         });
-        console.log('Active boosts after loading:', this.activeBoosts.size, 'boosts');
+        // Active boosts loaded
       } else {
-        console.log('No saved boosts found');
+        // No saved boosts found
       }
     } catch (error) {
       console.error('Error loading game data:', error);
@@ -309,12 +309,12 @@ export class GameService {
   private showOfflineGrowthProgress(hours: number, plantsReady: number) {
     const hoursText = hours < 1 ? `${Math.round(hours * 60)} minutes` : `${hours.toFixed(1)} hours`;
     const plantText = plantsReady > 0 ? ` and ${plantsReady} plants are ready to harvest!` : '';
-    console.log(`Your garden grew while you were away for ${hoursText}${plantText}`);
+    // Garden grew while offline
   }
 
   private showOfflineProgress(hours: number, coins: number) {
     // This would show a modal/alert with offline progress
-    console.log(`Welcome back! You were away for ${hours.toFixed(1)} hours and earned ${coins} coins!`);
+    // Offline progress calculated
   }
 
   // Public methods
@@ -341,15 +341,14 @@ export class GameService {
     };
 
     // Apply active boosts to the new plant
-    console.log('Active boosts map size:', this.activeBoosts.size);
-    console.log('Active boosts entries:', Array.from(this.activeBoosts.entries()));
+    // Check active boosts for new plant
     
     this.activeBoosts.forEach((expiryDate, boostId) => {
       const now = new Date();
-      console.log(`Checking boost ${boostId}: expiry=${expiryDate}, now=${now}, valid=${expiryDate > now}`);
+      // Check if boost is still valid
       if (expiryDate > now) {
         const remainingTime = Math.floor((expiryDate.getTime() - now.getTime()) / 1000);
-        console.log(`Applying boost ${boostId} with ${remainingTime}s remaining to new plant`);
+        // Apply boost to new plant
         
         if (boostId === 'growth_boost_1h') {
           newPlant.boosts.push({
@@ -389,7 +388,7 @@ export class GameService {
       }
     });
 
-    console.log('New plant boosts after applying:', newPlant.boosts);
+    // Boosts applied to new plant
     
     garden.plants.push(newPlant);
     player.coins -= seedCost;
@@ -476,7 +475,7 @@ export class GameService {
       // Update leaderboard
       this.updateLeaderboard(player);
       
-      console.log(`Level up! You are now level ${player.level}`);
+      // Level up!
     }
   }
 
@@ -549,8 +548,7 @@ export class GameService {
     const duration = boostDurations[boostId] || 1800;
     const expiryDate = new Date(Date.now() + duration * 1000);
     this.activeBoosts.set(boostId, expiryDate);
-    console.log(`Boost ${boostId} applied, expires at ${expiryDate}`);
-    console.log('Active boosts after applying:', this.activeBoosts);
+    // Boost applied
     
     // Save immediately after setting the boost
     this.saveGameData();
@@ -634,6 +632,15 @@ export class GameService {
       toSave[key] = value;
     });
     localStorage.setItem('premiumSeeds', JSON.stringify(toSave));
+  }
+
+  addGardenField(): void {
+    const garden = this.gardenSubject.value;
+    if (garden) {
+      garden.maxPlants += 1;
+      this.gardenSubject.next(garden);
+      this.saveGameData();
+    }
   }
 
   ngOnDestroy() {

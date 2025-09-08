@@ -50,7 +50,7 @@
       </ion-card-header>
       <ion-card-content>
         <ion-radio-group [(ngModel)]="selectedLanguage" (ionChange)="changeLanguage($event)">
-          <ion-item>
+          <ion-item button (click)="setLanguage('de')">
             <ion-label>
               <h2>Deutsch</h2>
               <p>{{ t('settings.language.germanDesc') }}</p>
@@ -58,7 +58,7 @@
             <ion-radio slot="start" value="de"></ion-radio>
           </ion-item>
           
-          <ion-item>
+          <ion-item button (click)="setLanguage('en')">
             <ion-label>
               <h2>English</h2>
               <p>{{ t('settings.language.englishDesc') }}</p>
@@ -66,29 +66,6 @@
             <ion-radio slot="start" value="en"></ion-radio>
           </ion-item>
         </ion-radio-group>
-      </ion-card-content>
-    </ion-card>
-
-    <!-- Game Settings -->
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>{{ t('settings.game.title') }}</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-item>
-          <ion-label>{{ t('settings.game.notifications') }}</ion-label>
-          <ion-toggle [(ngModel)]="notificationsEnabled" (ionChange)="toggleNotifications()"></ion-toggle>
-        </ion-item>
-        
-        <ion-item>
-          <ion-label>{{ t('settings.game.sound') }}</ion-label>
-          <ion-toggle [(ngModel)]="soundEnabled" (ionChange)="toggleSound()"></ion-toggle>
-        </ion-item>
-        
-        <ion-item>
-          <ion-label>{{ t('settings.game.vibration') }}</ion-label>
-          <ion-toggle [(ngModel)]="vibrationEnabled" (ionChange)="toggleVibration()"></ion-toggle>
-        </ion-item>
       </ion-card-content>
     </ion-card>
 

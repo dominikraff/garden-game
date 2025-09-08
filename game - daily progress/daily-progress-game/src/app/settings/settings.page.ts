@@ -71,6 +71,12 @@ export class SettingsPage implements OnInit {
     this.showToast(this.t('settings.language.changed'));
   }
 
+  setLanguage(lang: Language) {
+    this.selectedLanguage = lang;
+    this.translationService.setLanguage(lang);
+    this.showToast(this.t('settings.language.changed'));
+  }
+
   async updatePlayerName() {
     if (this.player && this.playerName.trim()) {
       this.player.name = this.playerName.trim();
@@ -224,7 +230,8 @@ export class SettingsPage implements OnInit {
     const toast = await this.toastController.create({
       message,
       duration: 2000,
-      position: 'top'
+      position: 'bottom',
+      cssClass: 'toast-above-tabs'
     });
     toast.present();
   }

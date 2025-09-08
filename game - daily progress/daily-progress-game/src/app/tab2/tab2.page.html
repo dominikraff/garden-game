@@ -136,6 +136,39 @@
       </ion-card-content>
     </ion-card>
 
+    <!-- Upgrades Section -->
+    <ion-card class="shop-section-card">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="build-outline"></ion-icon>
+          {{ t('shop.upgrades.title') }}
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="shop-grid">
+          <div class="shop-item" *ngFor="let item of upgradeItems">
+            <div class="item-icon">
+              <ion-icon [name]="item.icon" [color]="item.color"></ion-icon>
+            </div>
+            <h3>{{ item.name }}</h3>
+            <p>{{ item.description }}</p>
+            <div class="item-price">
+              <ion-icon [name]="item.currency === 'coins' ? 'cash-outline' : 'diamond-outline'" 
+                        [color]="item.currency === 'coins' ? 'warning' : 'secondary'"></ion-icon>
+              <span>{{ item.price }}</span>
+            </div>
+            <ion-button 
+              size="small" 
+              fill="outline"
+              [disabled]="!canAfford(item)"
+              (click)="purchaseUpgrade(item)">
+              {{ t('shop.buy.now') }}
+            </ion-button>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
     <!-- Watch Ad Section -->
     <ion-card class="ad-card">
       <ion-card-header>

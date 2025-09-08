@@ -273,7 +273,7 @@ export class Tab3Page implements OnInit, OnDestroy {
         icon: 'podium-outline',
         color: 'primary',
         unlocked: false,
-        requirement: (player) => this.playerRank > 0 && this.playerRank <= 10
+        requirement: (player) => this.leaderboard.length >= 10 && this.playerRank > 0 && this.playerRank <= 10
       },
       {
         id: 'leaderboard_top3',
@@ -282,7 +282,7 @@ export class Tab3Page implements OnInit, OnDestroy {
         icon: 'trophy-outline',
         color: 'warning',
         unlocked: false,
-        requirement: (player) => this.playerRank > 0 && this.playerRank <= 3
+        requirement: (player) => this.leaderboard.length >= 3 && this.playerRank > 0 && this.playerRank <= 3
       },
       {
         id: 'leaderboard_first',
@@ -291,7 +291,7 @@ export class Tab3Page implements OnInit, OnDestroy {
         icon: 'crown-outline',
         color: 'warning',
         unlocked: false,
-        requirement: (player) => this.playerRank > 0 && this.playerRank === 1
+        requirement: (player) => this.leaderboard.length > 0 && this.playerRank === 1 && this.leaderboard.some(e => e.playerId !== player.id)
       }
     ];
   }

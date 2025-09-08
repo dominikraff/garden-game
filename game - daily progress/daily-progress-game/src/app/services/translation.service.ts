@@ -391,6 +391,10 @@ export class TranslationService {
       en: 'Premium Seeds',
       de: 'Premium-Samen'
     },
+    'shop.upgrades.title': {
+      en: 'Garden Upgrades',
+      de: 'Garten-Upgrades'
+    },
     'shop.ads.title': {
       en: 'Free Rewards',
       de: 'Kostenlose Belohnungen'
@@ -530,6 +534,14 @@ export class TranslationService {
     'shop.magic.herbsDesc': {
       en: 'Special herbs that grant random boosts',
       de: 'Spezielle Kräuter mit zufälligen Boosts'
+    },
+    'shop.extra.field': {
+      en: 'Extra Garden Field',
+      de: 'Zusätzliches Gartenfeld'
+    },
+    'shop.extra.fieldDesc': {
+      en: 'Add one more planting slot to your garden',
+      de: 'Füge einen weiteren Pflanzplatz zu deinem Garten hinzu'
     },
     'shop.boostOnCooldown': {
       en: 'This boost is on cooldown. Please wait before purchasing again.',

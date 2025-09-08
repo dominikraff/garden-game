@@ -13,7 +13,7 @@ interface ShopItem {
   currency: 'coins' | 'gems';
   icon: string;
   color: string;
-  type: 'boost' | 'seed' | 'premium';
+  type: 'boost' | 'seed' | 'premium' | 'upgrade';
 }
 
 @Component({
@@ -105,6 +105,21 @@ export class Tab2Page implements OnInit, OnDestroy {
         icon: 'medical-outline',
         color: 'secondary',
         type: 'seed'
+      }
+    ];
+  }
+
+  get upgradeItems(): ShopItem[] {
+    return [
+      {
+        id: 'extra_field',
+        name: this.t('shop.extra.field'),
+        description: this.t('shop.extra.fieldDesc'),
+        price: 500,
+        currency: 'coins',
+        icon: 'add-circle-outline',
+        color: 'success',
+        type: 'upgrade'
       }
     ];
   }
@@ -239,15 +254,14 @@ export class Tab2Page implements OnInit, OnDestroy {
       cssClass: 'custom-alert',
       buttons: [
         {
-          text: this.t('common.cancel'),
-          role: 'cancel'
-        },
-        {
           text: this.t('common.ok'),
-          cssClass: 'alert-button-full',
           handler: () => {
             this.completeBoostPurchase(item);
           }
+        },
+        {
+          text: this.t('common.cancel'),
+          role: 'cancel'
         }
       ]
     });
@@ -325,6 +339,67 @@ export class Tab2Page implements OnInit, OnDestroy {
     localStorage.setItem('boostCooldowns', JSON.stringify(toSave));
   }
 
+  async purchaseUpgrade(item: ShopItem) {
+    if (!this.player || !this.canAfford(item)) {
+      const toast = await this.toastController.create({
+        message: this.t('shop.insufficientFunds'),
+        duration: 2000,
+        color: 'danger',
+        position: 'bottom',
+        cssClass: 'toast-above-tabs'
+      });
+      toast.present();
+      return;
+    }
+
+    // Show confirmation
+    const alert = await this.alertController.create({
+      header: this.t('shop.confirmPurchase'),
+      message: `${this.t('shop.confirmMessage')} ${item.name} ${this.t('shop.for')} ${item.price} ${item.currency === 'coins' ? this.t('common.coins') : this.t('common.gems')}?`,
+      cssClass: 'custom-alert',
+      buttons: [
+        {
+          text: this.t('common.ok'),
+          handler: () => {
+            this.completeUpgradePurchase(item);
+          }
+        },
+        {
+          text: this.t('common.cancel'),
+          role: 'cancel'
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  private async completeUpgradePurchase(item: ShopItem) {
+    if (!this.player) return;
+
+    if (item.currency === 'coins') {
+      this.player.coins -= item.price;
+    } else {
+      this.player.gems -= item.price;
+    }
+
+    // Apply upgrade
+    if (item.id === 'extra_field') {
+      this.gameService.addGardenField();
+    }
+
+    this.gameService.updatePlayer(this.player);
+
+    const toast = await this.toastController.create({
+      message: `${item.name} ${this.t('shop.purchased')}! 🌱`,
+      duration: 3000,
+      color: 'success',
+      position: 'bottom',
+      cssClass: 'toast-above-tabs'
+    });
+    toast.present();
+  }
+
   async purchaseSeed(item: ShopItem) {
     if (!this.player || !this.canAfford(item)) {
       const toast = await this.toastController.create({
@@ -345,15 +420,14 @@ export class Tab2Page implements OnInit, OnDestroy {
       cssClass: 'custom-alert',
       buttons: [
         {
-          text: this.t('common.cancel'),
-          role: 'cancel'
-        },
-        {
           text: this.t('common.ok'),
-          cssClass: 'alert-button-full',
           handler: () => {
             this.completeSeedPurchase(item);
           }
+        },
+        {
+          text: this.t('common.cancel'),
+          role: 'cancel'
         }
       ]
     });
