@@ -1,4 +1,4 @@
-package com.techlogic.gardenprogress.daily;
+package com.bloomgarden.app;
 
 import com.getcapacitor.BridgeActivity;
 

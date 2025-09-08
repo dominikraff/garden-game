@@ -24,7 +24,8 @@
       "Bash(py generate_icon.py:*)",
       "Bash(gradlew:*)",
       "Bash(.gradlew:*)",
-      "Bash(ionic capacitor:*)"
+      "Bash(ionic capacitor:*)",
+      "Bash(ionic cap:*)"
     ],
     "deny": [],
     "ask": []

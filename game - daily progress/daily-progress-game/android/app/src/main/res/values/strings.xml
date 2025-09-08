@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Garden Progress Daily</string>
-    <string name="title_activity_main">Garden Progress Daily</string>
-    <string name="package_name">com.techlogic.gardenprogress.daily</string>
-    <string name="custom_url_scheme">com.techlogic.gardenprogress.daily</string>
+    <string name="app_name">Bloom Garden</string>
+    <string name="title_activity_main">Bloom Garden</string>
+    <string name="package_name">com.bloomgarden.app</string>
+    <string name="custom_url_scheme">com.bloomgarden.app</string>
 </resources>
