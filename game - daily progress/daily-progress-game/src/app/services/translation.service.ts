@@ -38,8 +38,8 @@ export class TranslationService {
 
     // Welcome Dialog
     'welcome.title': {
-      en: 'Welcome to Daily Garden!',
-      de: 'Willkommen bei Daily Garden!'
+      en: 'Welcome to BloomCraft!',
+      de: 'Willkommen bei BloomCraft!'
     },
     'welcome.message': {
       en: 'Please enter your name and email to get started',

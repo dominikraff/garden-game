@@ -32,8 +32,8 @@
     <circle cx="120" cy="-100" r="20" fill="#E91E63"/>
     
     <!-- App Title -->
-    <text x="0" y="100" text-anchor="middle" fill="white" font-size="48" font-weight="bold" font-family="Arial, sans-serif">Garden Progress</text>
-    <text x="0" y="150" text-anchor="middle" fill="white" font-size="24" font-family="Arial, sans-serif" opacity="0.8">Daily Garden Game</text>
+    <text x="0" y="100" text-anchor="middle" fill="white" font-size="56" font-weight="bold" font-family="Arial, sans-serif">BloomCraft</text>
+    <text x="0" y="150" text-anchor="middle" fill="white" font-size="24" font-family="Arial, sans-serif" opacity="0.8">Garden Growing Game</text>
     
     <!-- Loading indicator -->
     <circle cx="0" cy="250" r="3" fill="white" opacity="0.6">
@@ -48,5 +48,5 @@
   </g>
   
   <!-- Footer -->
-  <text x="540" y="1800" text-anchor="middle" fill="white" font-size="16" opacity="0.6">Techlogic Solutions GmbH</text>
+  <text x="540" y="1800" text-anchor="middle" fill="white" font-size="16" opacity="0.6">BloomCraft Team</text>
 </svg>

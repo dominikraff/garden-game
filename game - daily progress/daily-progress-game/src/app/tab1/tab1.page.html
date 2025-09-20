@@ -1,28 +1,24 @@
 <ion-header [translucent]="false" class="custom-header">
   <ion-toolbar color="primary">
-    <ion-title>
-      <div class="title-container">
-        {{ t('garden.title') }}
-      </div>
-    </ion-title>
+    <ion-buttons slot="start">
+      <!-- Leerer Platz für Symmetrie -->
+      <div style="width: 44px;"></div>
+    </ion-buttons>
+    <ion-title>{{ t('garden.title') }}</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="showDailyReward()" *ngIf="dailyReward">
         <ion-icon name="gift-outline"></ion-icon>
       </ion-button>
+      <div *ngIf="!dailyReward" style="width: 44px;"></div>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">{{ t('garden.title') }}</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="false" class="content-with-fixed-stats">
 
   <div class="game-container" *ngIf="player && garden">
     <!-- Player Stats -->
-    <ion-card class="stats-card">
+    <ion-card class="stats-card fixed-stats">
       <ion-card-content>
         <div class="stats-row">
           <div class="stat-item" [attr.title]="t('garden.stats.coinsTooltip')">
@@ -38,8 +34,8 @@
             <span>{{ t('garden.level') }} {{ player.level }}</span>
           </div>
         </div>
-        <ion-progress-bar 
-          [value]="getExperienceProgress()" 
+        <ion-progress-bar
+          [value]="getExperienceProgress()"
           color="medium"
           class="experience-bar">
         </ion-progress-bar>

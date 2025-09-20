@@ -41,7 +41,10 @@
   <polygon points="824,240 844,200 864,240 844,280" fill="#42A5F5"/>
   <polygon points="824,240 844,200 864,240" fill="#64B5F6"/>
   
+  <!-- BloomCraft text at bottom -->
+  <text x="512" y="950" text-anchor="middle" fill="white" font-size="60" font-weight="bold" font-family="Arial, sans-serif">BloomCraft</text>
+
   <!-- Small decorative dots for visual balance -->
-  <circle cx="150" cy="800" r="15" fill="#FF9800"/>
-  <circle cx="874" cy="800" r="15" fill="#E91E63"/>
+  <circle cx="150" cy="750" r="12" fill="#FF9800"/>
+  <circle cx="874" cy="750" r="12" fill="#E91E63"/>
 </svg>

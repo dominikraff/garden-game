@@ -122,13 +122,99 @@ ion-header {
   position: sticky;
   top: 0;
   z-index: 1000;
-  
+
   ion-toolbar {
-    --min-height: 56px;
+    --min-height: 40px; // Weiter reduziert auf 40px
     --padding-start: 16px;
     --padding-end: 16px;
-    padding-top: env(safe-area-inset-top, 20px); // Push down from status bar
-    min-height: calc(56px + env(safe-area-inset-top, 20px));
+    padding-top: env(safe-area-inset-top, 4px); // Weiter reduziert auf 4px
+    min-height: calc(40px + env(safe-area-inset-top, 4px));
+
+    ion-title {
+      font-size: 1.05rem; // Noch kleinere Schrift
+      font-weight: 600;
+      line-height: 1.2;
+    }
+  }
+
+  // Android-spezifische Anpassungen
+  .plt-android & {
+    ion-toolbar {
+      --min-height: 44px; // Erhöht für besseren Abstand zur Status Bar
+      padding-top: env(safe-area-inset-top, 2px); // 10px weniger (war 12px)
+      min-height: calc(44px + env(safe-area-inset-top, 2px));
+
+      ion-title {
+        font-size: 1.05rem; // Etwas größere Schrift
+      }
+    }
+  }
+
+  // Zentrierte Titel für alle Tabs
+  ion-title {
+    text-align: center !important;
+    font-weight: 600 !important;
+  }
+}
+
+// Custom Header Styles - überschreibt die 80px min-height
+.custom-header {
+  ion-toolbar {
+    --background: linear-gradient(180deg, #4caf50 0%, #66bb6a 100%);
+    --color: white;
+    --min-height: 50px !important; // Reduziert von 80px auf 50px
+    min-height: 50px !important;
+  }
+
+  // Android-spezifisch: Korrigiert für Status Bar
+  .plt-android & {
+    ion-toolbar {
+      --min-height: 44px !important; // Erhöht für sicheren Abstand
+      min-height: 44px !important;
+      padding-top: env(safe-area-inset-top, 2px) !important; // 10px weniger (war 12px)
+      height: calc(44px + env(safe-area-inset-top, 2px)) !important;
+
+      ion-title {
+        font-size: 1rem !important; // Normale Schrift
+        line-height: 1.2 !important;
+      }
+    }
+  }
+}
+
+// Einfach den ursprünglichen Stats-Block fixiert positionieren
+.stats-card.fixed-stats {
+  position: fixed !important;
+  top: 50px; // Unter dem Header
+  left: 0;
+  right: 0;
+  z-index: 999;
+  margin: 0 !important; // Volle Breite
+  border-radius: 0 !important; // Keine abgerundeten Ecken für vollen Bildschirm
+  width: 100vw !important;
+
+  // Android-spezifisch
+  .plt-android & {
+    top: calc(44px + env(safe-area-inset-top, 2px)); // Unter dem korrigierten Android Header
+  }
+}
+
+// Grüner Hintergrund für das ganze Layout
+ion-content.content-with-fixed-stats {
+  --background: var(--garden-grass) !important;
+}
+
+// Content mit fixiertem Stats-Block - Platz oben lassen
+.content-with-fixed-stats {
+  --padding-top: 75px; // Weiter reduziert - näher unter Stats-Card
+
+  .plt-android & {
+    --padding-top: calc(44px + env(safe-area-inset-top, 2px) + 35px); // Noch weniger Platz für Android
+  }
+
+  // Garten-Container anpassen
+  .game-container {
+    padding-top: 0; // Kein extra Padding, da Content schon Padding hat
   }
 }
 
@@ -152,22 +238,20 @@ ion-content {
 
 // Fix alert positioning - respect safe area
 .plant-info-alert-simple {
-  --max-width: 350px;
-  --min-width: 280px;
-  
+  --max-width: calc(100vw - 24px); // Fast gesamte Breite mit kleinem margin
+  --min-width: 320px;
+
   .alert-wrapper {
     border-radius: 16px;
     overflow: hidden;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
     position: fixed;
-    bottom: 140px; // Position above tab bar
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
-    
-    // Android specific position
-    .plt-android & {
-      bottom: 160px; // Higher on Android to account for navigation bar
-    }
+    transform: translate(-50%, -50%); // Zentriert in der Mitte des Screens
+    max-height: calc(100vh - 40px); // Noch höher (nur 20px margin oben/unten)
+    height: calc(100vh - 40px); // Feste Höhe für fast ganzen Bildschirm
+    width: calc(100vw - 24px); // Volle Breite mit 12px margin links/rechts
   }
   
   .alert-head {
@@ -209,22 +293,20 @@ ion-content {
 
 // Plant Info Alert Styles (old, complex version) - fix positioning
 .plant-info-alert {
-  --max-width: 90%;
+  --max-width: calc(100vw - 24px); // Fast gesamte Breite mit kleinem margin
   --min-width: 320px;
-  
+
   .alert-wrapper {
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
     position: fixed;
-    bottom: 140px; // Position above tab bar
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
-    
-    // Android specific position
-    .plt-android & {
-      bottom: 160px; // Higher on Android to account for navigation bar
-    }
+    transform: translate(-50%, -50%); // Zentriert in der Mitte des Screens
+    max-height: calc(100vh - 40px); // Noch höher (nur 20px margin oben/unten)
+    height: calc(100vh - 40px); // Feste Höhe für fast ganzen Bildschirm
+    width: calc(100vw - 24px); // Volle Breite mit 12px margin links/rechts
   }
   
   .alert-head {
@@ -241,8 +323,9 @@ ion-content {
   
   .alert-message {
     padding: 0 !important;
-    max-height: 70vh;
+    max-height: calc(100vh - 180px); // Angepasst für fast ganzen Bildschirm
     overflow-y: auto;
+    flex: 1; // Nimmt verfügbaren Platz ein
     
     .plant-info-container {
       padding: 20px;
@@ -387,16 +470,16 @@ ion-content {
   }
 }
 
-// Toast above tabs - position directly above tab bar
+// Toast above tabs - position higher up on screen
 .toast-above-tabs {
   position: fixed !important;
-  bottom: 72px !important; // 68px tab bar + 4px spacing
+  bottom: 150px !important; // Weiter oben, mehr Abstand zur Tab-Bar
   left: 0;
   right: 0;
   margin: 0 auto;
-  
+
   @media (max-width: 768px) {
-    bottom: 96px !important; // 92px tab bar + 4px spacing
+    bottom: 170px !important; // Noch weiter oben für mobile Geräte
   }
 }
 
@@ -404,42 +487,58 @@ ion-content {
 .custom-alert {
   .alert-wrapper {
     position: fixed !important;
-    bottom: 140px !important;
+    top: 50% !important;
     left: 50% !important;
-    transform: translateX(-50%) !important;
-    
-    // Android specific position
-    .plt-android & {
-      bottom: 160px !important;
-    }
+    transform: translate(-50%, -50%) !important; // Zentriert in der Mitte
+    max-height: calc(100vh - 120px) !important; // Maximale Höhe mit margin
+    width: calc(100vw - 32px) !important; // Volle Breite mit 16px margin links/rechts
+    max-width: calc(100vw - 32px) !important;
   }
   
+  .alert-head {
+    padding: 20px;
+    background: linear-gradient(135deg, #66bb6a 0%, #4caf50 100%);
+
+    h2 {
+      color: white !important;
+      font-size: 1.4rem;
+      font-weight: 600;
+      text-align: center;
+      margin: 0;
+    }
+  }
+
   .alert-message {
     white-space: pre-line !important;
     line-height: 1.6 !important;
+    padding: 24px !important; // Mehr Padding für größere Modals
+    font-size: 1rem !important;
+    color: var(--ion-text-color);
   }
-  
+
   .alert-button-group {
     padding: 0;
     display: flex;
     flex-direction: row;
-    
+
     .alert-button {
       margin: 0;
       border-radius: 0;
       border-top: 1px solid rgba(0, 0, 0, 0.1);
       flex: 1;
-      
+      padding: 16px; // Größere Buttons für Touch-Freundlichkeit
+      font-size: 1.1rem; // Größere Schrift
+
       &:first-child {
         border-right: 1px solid rgba(0, 0, 0, 0.1);
       }
-      
+
       &.alert-button-full {
         font-weight: 600;
         color: var(--ion-color-primary);
         text-align: center;
-        padding: 14px;
-        font-size: 16px;
+        padding: 16px;
+        font-size: 1.1rem;
       }
     }
   }

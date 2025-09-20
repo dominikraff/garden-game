@@ -1,19 +1,10 @@
 <ion-header [translucent]="false" class="custom-header">
   <ion-toolbar color="primary">
-    <ion-title>
-      <div class="title-container">
-        {{ t('shop.title') }}
-      </div>
-    </ion-title>
+    <ion-title>{{ t('shop.title') }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">{{ t('shop.title') }}</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="false">
 
   <div class="shop-container" *ngIf="player">
     <!-- Currency Display -->

@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.bloomgarden.app',
-  appName: 'Bloom Garden',
+  appId: 'com.bloomcraft.app',
+  appName: 'BloomCraft',
   webDir: 'www',
   server: {
     androidScheme: 'https'

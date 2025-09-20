@@ -178,6 +178,7 @@ export class Tab2Page implements OnInit, OnDestroy {
     const alert = await this.alertController.create({
       header: this.t('shop.premium.purchaseTitle'),
       message: this.t('shop.premium.purchaseMessage'),
+      cssClass: 'custom-alert',
       buttons: [
         {
           text: this.t('common.cancel'),
@@ -254,14 +255,14 @@ export class Tab2Page implements OnInit, OnDestroy {
       cssClass: 'custom-alert',
       buttons: [
         {
+          text: this.t('common.cancel'),
+          role: 'cancel'
+        },
+        {
           text: this.t('common.ok'),
           handler: () => {
             this.completeBoostPurchase(item);
           }
-        },
-        {
-          text: this.t('common.cancel'),
-          role: 'cancel'
         }
       ]
     });
@@ -359,14 +360,14 @@ export class Tab2Page implements OnInit, OnDestroy {
       cssClass: 'custom-alert',
       buttons: [
         {
+          text: this.t('common.cancel'),
+          role: 'cancel'
+        },
+        {
           text: this.t('common.ok'),
           handler: () => {
             this.completeUpgradePurchase(item);
           }
-        },
-        {
-          text: this.t('common.cancel'),
-          role: 'cancel'
         }
       ]
     });
@@ -420,14 +421,14 @@ export class Tab2Page implements OnInit, OnDestroy {
       cssClass: 'custom-alert',
       buttons: [
         {
+          text: this.t('common.cancel'),
+          role: 'cancel'
+        },
+        {
           text: this.t('common.ok'),
           handler: () => {
             this.completeSeedPurchase(item);
           }
-        },
-        {
-          text: this.t('common.cancel'),
-          role: 'cancel'
         }
       ]
     });

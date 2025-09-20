@@ -3,6 +3,7 @@ import { AlertController, ToastController, ActionSheetController } from '@ionic/
 import { Subscription } from 'rxjs';
 import { GameService } from '../services/game.service';
 import { TranslationService } from '../services/translation.service';
+import { AdMobService } from '../services/admob.service';
 import { Player, Garden, Plant, PlantType, DailyReward, BoostType } from '../models/game.model';
 import { Preferences } from '@capacitor/preferences';
 
@@ -25,7 +26,8 @@ export class Tab1Page implements OnInit, OnDestroy {
     private translationService: TranslationService,
     private alertController: AlertController,
     private toastController: ToastController,
-    private actionSheetController: ActionSheetController
+    private actionSheetController: ActionSheetController,
+    private adMobService: AdMobService
   ) {}
 
   ngOnInit() {
@@ -147,8 +149,21 @@ export class Tab1Page implements OnInit, OnDestroy {
   }
 
   getPlantIcon(type: PlantType, growth?: number): string {
-    const growthStage = growth ? Math.floor(growth / 33.33) : 0; // 0, 1, 2, or 3 stages
-    
+    // Sicherstellen, dass growth definiert ist
+    const currentGrowth = growth || 0;
+
+    // Bessere Stage-Berechnung für 4 Stufen (0, 1, 2, 3)
+    let growthStage = 0;
+    if (currentGrowth >= 100) {
+      growthStage = 3; // Bereit zum Ernten
+    } else if (currentGrowth >= 75) {
+      growthStage = 2; // Fast bereit
+    } else if (currentGrowth >= 35) {
+      growthStage = 1; // Wächst
+    } else {
+      growthStage = 0; // Keim
+    }
+
     const stageIcons = {
       [PlantType.FLOWER]: [
         'leaf', // Sprout
@@ -166,7 +181,7 @@ export class Tab1Page implements OnInit, OnDestroy {
         'leaf', // Sprout
         'leaf', // Growing
         'leaf', // Almost ready
-        'apple' // Fruit ready
+        'apple' // Fruit ready - wird jetzt korrekt angezeigt bei 100%
       ],
       [PlantType.HERB]: [
         'leaf', // Sprout
@@ -175,8 +190,8 @@ export class Tab1Page implements OnInit, OnDestroy {
         'medical' // Ready
       ]
     };
-    
-    return stageIcons[type][Math.min(growthStage, 3)];
+
+    return stageIcons[type][growthStage];
   }
 
   getPlantColor(type: PlantType): string {
@@ -212,21 +227,26 @@ export class Tab1Page implements OnInit, OnDestroy {
         cssClass: 'toast-above-tabs'
       });
       toast.present();
+
+      // Zeige Werbung nach 3 Sekunden Verzögerung
+      setTimeout(async () => {
+        await this.showHarvestAd();
+      }, 3000);
     }
   }
 
   async harvestAll() {
     if (!this.garden) return;
-    
+
     const readyPlants = this.garden.plants.filter(p => p.isReady);
     let harvested = 0;
-    
+
     for (const plant of readyPlants) {
       if (this.gameService.harvestPlant(plant.id)) {
         harvested++;
       }
     }
-    
+
     if (harvested > 0) {
       const toast = await this.toastController.create({
         message: `${harvested} ${this.t('garden.plantsHarvested')}`,
@@ -236,6 +256,11 @@ export class Tab1Page implements OnInit, OnDestroy {
         cssClass: 'toast-above-tabs'
       });
       toast.present();
+
+      // Zeige Werbung nach 3 Sekunden Verzögerung
+      setTimeout(async () => {
+        await this.showHarvestAd();
+      }, 3000);
     }
   }
 
@@ -544,5 +569,22 @@ ${plant.isReady ? this.t('garden.tapToHarvest') : this.t('garden.keepGrowing')}`
       cssClass: 'toast-above-tabs'
     });
     toast.present();
+  }
+
+  private async showHarvestAd() {
+    try {
+      if (this.adMobService.isAdReady()) {
+        const adShown = await this.adMobService.showInterstitialAd();
+        if (adShown) {
+          console.log('AdMob: Harvest ad shown successfully');
+        } else {
+          console.log('AdMob: Failed to show harvest ad');
+        }
+      } else {
+        console.log('AdMob: Ad not ready for harvest');
+      }
+    } catch (error) {
+      console.error('AdMob: Error showing harvest ad:', error);
+    }
   }
 }
